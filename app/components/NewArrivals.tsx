@@ -8,20 +8,20 @@ const phoneData = [
     id: 1,
     name: "Apple Airpods Max",
     price: "N800,000",
-    image: "../airpodsmax.webp"
+    image: "../images/airpodsmax.webp"
   },
   {
     id: 2,
     name: "JBL Pulse 4",
     price: "N200,000",
-    image: "../jblpulse4.jpg"
+    image: "../images/jblpulse4.jpg"
   },
   {
     id: 3,
     name: "Airpods Pro 2nd Gen",
     price: "N370,000",
     image:
-      "../airpodspro2.webp",
+      "../images/airpodspro2.webp",
   },
 ];
 const NewArrivals = () => {
@@ -32,7 +32,6 @@ const NewArrivals = () => {
       </h2>
       <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
         {phoneData.map((item, index) => (
-          <Link href="/">
             <div
               key={item.id || index}
               className="bg-white group rounded-lg lg:rounded-lg xl:rounded-lg 2xl:rounded-lg cursor-pointer border p-2 md:p-4 space-y-2 hover:shadow-lg transition-shadow duration-300"
@@ -47,7 +46,6 @@ const NewArrivals = () => {
               <h2 className="text-md md:text-lg font-bold">{item.name}</h2>
               <p className="text-sm md:text-lg font-semibold">{item.price}</p>
             </div>
-          </Link>
         ))}
       </div>
       <div className="flex justify-end mr-4 md:justify-end mt-5">

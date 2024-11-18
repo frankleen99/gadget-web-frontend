@@ -7,21 +7,21 @@ const slides = [
     category: "Smartwatch",
     name: "applewatch series 5",
     image:
-      "../applewatch.jpg",
+      "../images/applewatch.jpg",
   },
   {
     id: 2,
     category: "Headphones",
     name: "Sony WH-1000XM5",
     image:
-      "../airpods.jpg",
+      "../images/airpods.jpg",
   },
   {
     id: 3,
     category: "Speakers",
     name: "Jbl charge 5",
     image:
-      "../jbl.jpg",
+      "../images/jbl.jpg",
   },
 ];
 
