@@ -6,14 +6,7 @@ import { FaSearch } from "react-icons/fa";
 const Searchbar = () => {
   const [input, setInput] = useState<string>("");
 
-  const endPoint = "https://gadget-web-api.onrender.com";
-
-  fetch(endPoint)
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-    });
-
+ 
   const router = useRouter();
 
   function handleSearch(e: FormEvent<HTMLFormElement>) {
