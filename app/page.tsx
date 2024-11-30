@@ -5,7 +5,8 @@ import Surface from './components/Surface';
 import GoodDeals from './components/GoodDeals'
 import NewArrivals from './components/NewArrivals';
 import Footer from './components/Footer';
-import Navbar from './components/Menu';
+import Navbar from './components/NavBar';
+
 
 const page = () => {
   return (

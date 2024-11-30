@@ -18,7 +18,7 @@ const surfaceLaptop = [
     id: 3,
     name: "Surface 4",
     image:
-      "https://thebit.nz/wp-content/uploads/2021/06/Microsoft-Surface-Laptop-4-review-1.jpg",
+      "https://www.techadvisor.com/wp-content/uploads/2022/06/microsoft_surface_pro_4_review_7.jpg?quality=50&strip=all&w=1024",
   },
 ];
 const Surface = () => {
