@@ -1,13 +1,20 @@
-"use client"
-import React, { useEffect, useState } from 'react'
-import Navbar from '../components/NavBar';
-import Footer from '../components/Footer';
+"use client";
+import React, { useEffect, useState } from "react";
 
-const page = () => {
-  const [products, setProducts] = useState([]);
+type Product = {
+  id: number;
+  category: string;
+  name: string;
+  price: string;
+  image: string;
+  details: string[];
+  description: string;
+};
+
+const Page: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch products from the API
   useEffect(() => {
     const API_URL =
       process.env.NEXT_PUBLIC_API_URL || "https://gadget-web-api.onrender.com";
@@ -16,7 +23,8 @@ const page = () => {
       try {
         const res = await fetch(`${API_URL}/category/televisions`);
         if (!res.ok) throw new Error("Failed to fetch products");
-        const data = await res.json();
+        const data: Product[] = await res.json();
+        console.log("Fetched Products:", data);
         setProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -37,42 +45,30 @@ const page = () => {
 
   return (
     <div>
-      <Navbar />
-      <div className="h-screen px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.map((product, index) => (
-            <div
-              key={product.id || index}
-              className="border border-gray-300 mt-[90px] rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow"
-            >
-              {/* Product Image */}
-              <img
-                src={product.image || "/default-image.png"}
-                alt={product.name || "Product"}
-                className="w-full h-40 object-cover rounded-md mb-4"
-              />
-              {/* Product Name */}
-              <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
+      <div className="min-h-screen px-4 sm:px-6 lg:px-8 mt-40">
+        <h1 className="text-2xl font-bold my-6">Product Listings</h1>
 
-              {/* Product Price */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 bg-[#fff]">
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="rounded-[20px] p-4 shadow-md hover:shadow-lg transition-shadow bg-[#fff] border border-gray-300 overflow-hidden"
+            >
+              <img
+                src={product.image || "/fallback-image.png"}
+                alt={product.name}
+                className="w-full h-40 object-cover rounded-t-[20px] mb-4"
+              />
+              <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
               <p className="text-blue-600 font-medium text-md mb-4">
                 {product.price}
               </p>
-
-              {/* Add to Cart Button */}
-              <button
-                className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
-                onClick={() => alert(`Added ${product.name} to cart!`)}
-              >
-                Add to Cart
-              </button>
             </div>
           ))}
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
 
-export default page
+export default Page;

@@ -19,7 +19,7 @@ const Searchbar = () => {
     setInput(e.target.value);
   };
   return (
-    <div className="flex justify-center items-center mt-3 absolute top-20 left-1/2 transform -translate-x-1/2 w-full px-4">
+    <div className="flex justify-center items-center mt-8  absolute top-20 left-1/2 transform -translate-x-1/2 w-full px-4">
       <form
         onSubmit={handleSearch}
         className="relative w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl"

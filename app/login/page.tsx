@@ -1,10 +1,9 @@
-"use client"
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-      contacts page
+      login
     </div>
   )
 }
