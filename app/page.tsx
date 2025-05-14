@@ -2,6 +2,9 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import Navbar from "./components/NavBar";
+import Footer from "./components/Footer";
+import SearchBar from "./components/SearchBar";
 
 const page = () => {
   const slides = [
@@ -170,6 +173,9 @@ const page = () => {
 
   return (
     <div>
+      <Navbar />
+
+      <SearchBar />
       {/* Slider */}
       <div className="bg-cover bg-center w-full h-full">
         <div className="overflow-hidden relative">
@@ -183,7 +189,7 @@ const page = () => {
                 key={slide.id}
               >
                 {/* Image container */}
-                <div className="mt-48 h-full w-full lg:mt-28 xl:mt-28 relative flex lg:h-[50vh] xl:h-[50vh] 2xl:h-[50vh]">
+                <div className="mt-10 h-full w-full lg:mt-10 xl:mt-10 relative flex lg:h-[50vh] xl:h-[50vh] 2xl:h-[50vh]">
                   <img
                     src={slide.image}
                     alt={slide.name}
@@ -200,14 +206,14 @@ const page = () => {
       {/*SECTION 2 GRIDS  */}
       <div className="bg-gray-100 p-5">
         {/* Title */}
-        <h2 className="text-3xl md:text-4xl lg:text-5xl text-center font-bold mb-3">
+        <h2 className="text-[20px] md:text-[24px] lg:text-[24px] font-bold mb-3">
           Product Categories
         </h2>
         {/* Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-stretch">
           {gridData.map((item) => (
             <Link href={item.link} key={item.id}>
-              <div className="bg-white group cursor-pointer rounded-lg border p-3 hover:shadow-lg transition-shadow duration-300">
+              <div className="bg-white group cursor-pointer rounded-lg border p-3 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
                 {/* Image Container */}
                 <div className="aspect-square overflow-hidden rounded-lg">
                   <img
@@ -217,13 +223,14 @@ const page = () => {
                   />
                 </div>
                 {/* Category Name */}
-                <h3 className="text-md font-semibold text-center mt-4">
+                <h3 className="text-md font-semibold text-center mt-4 flex-grow flex items-center justify-center">
                   {item.category}
                 </h3>
               </div>
             </Link>
           ))}
         </div>
+
       </div>
       {/* SECTION 2 ENDS */}
 
@@ -260,7 +267,7 @@ const page = () => {
 
       {/* SECTION 4 GOOD DEALS */}
       <div className="bg-gray-100 p-4 sm:p-6 lg:p-8">
-        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 text-center">
+        <h2 className="text-[20px] sm:text-2xl md:text-[20px] lg:text-[24px] font-bold mb-4 md:mb-6 ">
           CHECK OUT AVAILABLE GOOD DEALS
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
@@ -302,7 +309,7 @@ const page = () => {
 
       {/* SECTION 5 NEW ARRIVALS */}
       <div className="bg-gray-100 p-4 sm:p-6 lg:p-8">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-center">
+        <h2 className="text-[20px] sm:text-2xl md:text-[24px] font-bold mb-4 ">
           CHECK OUT NEW PRODUCTS
         </h2>
         <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
@@ -341,8 +348,11 @@ const page = () => {
         </div>
       </div>
       {/* SECTION 5 NEW ARRIVALS END */}
+
+      <Footer />
     </div>
   );
 };
 
 export default page;
+

@@ -1,5 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Navbar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 type Product = {
   id: number;
@@ -45,8 +47,9 @@ const Page: React.FC = () => {
 
   return (
     <div>
+      <Navbar />
       <div className="min-h-screen px-4 sm:px-6 lg:px-8 mt-40">
-        <h1 className="text-2xl font-bold my-6">Product Listings</h1>
+        <h1 className="text-2xl font-bold my-6">Televisons</h1>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 bg-[#fff]">
           {products.map((product) => (
@@ -67,6 +70,7 @@ const Page: React.FC = () => {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

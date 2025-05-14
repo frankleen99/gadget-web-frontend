@@ -1,48 +1,76 @@
-"use client";
-import { useRouter } from "next/navigation";
-import React, { ChangeEvent, FormEvent, useState } from "react";
-import { FaSearch } from "react-icons/fa";
 
-const Searchbar = () => {
-  const [input, setInput] = useState<string>("");
 
-  const router = useRouter();
 
-  function handleSearch(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (input.trim()) {
-      router.push(`/list?name=${encodeURIComponent(input)}`);
-    }
-  }
+import React from 'react';
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
-  };
+const SearchInput = () => {
   return (
-    <div className="flex justify-center items-center mt-8  absolute top-20 left-1/2 transform -translate-x-1/2 w-full px-4">
-      <form
-        onSubmit={handleSearch}
-        className="relative w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl"
-      >
-        {/* Input Field */}
-        <input
-          type="text"
-          name="name"
-          placeholder="Type to search"
-          value={input}
-          onChange={handleChange}
-          className="w-full bg-white px-4 py-2 rounded-md border border-gray-300 ring-1 ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-        />
-        {/* Search Button */}
-        <button
-          type="submit"
-          className="absolute -right-1 top-1/2 transform -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white p-[8px] rounded-md"
-        >
-          <FaSearch className="cursor-pointer" size={17} />
-        </button>
-      </form>
-    </div>
-  );  
+
+
+
+
+
+    // <div className="relative w-full max-w-md mx-auto mt-52">
+    //   <input
+    //     type="text"
+    //     placeholder="Search..."
+    //     className="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+    //   />
+    //   <button
+    //     type="button"
+    //     className="absolute inset-y-0 right-0 flex items-center px-4 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    //   >
+    //     Search
+    //   </button>
+    // </div>
+
+
+
+
+
+//     <div className="relative w-[600px]  mx-auto mt-52">
+//   <input
+//     type="text"
+//     placeholder="Search..."
+//     className="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+//   />
+//   <button
+//     type="button"
+//     className="absolute inset-y-0 right-0 flex items-center px-4 bg-black text-white rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+//   >
+//     Search
+//   </button>
+// </div>
+
+
+
+
+
+
+ <div className="relative w-full lg:w-[600px] sm:w-[600px] max-w-md mx-auto mt-10 z-10">
+  <input
+    type="text"
+    placeholder="Search..."
+    className="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-full focus:outline-none focus:ring-1 focus:ring-[gray]"
+  />
+  <button
+    type="button"
+    className="absolute inset-y-0 right-0 flex items-center px-4 bg-black text-white rounded-full hover:bg-gray-800 focus:outline-none  focus:ring-1 focus:ring-[gray]"
+  >
+    Search
+  </button>
+</div> 
+
+
+
+
+
+
+
+  );
 };
 
-export default Searchbar;
+export default SearchInput;
+
+
+
