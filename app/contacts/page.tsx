@@ -12,7 +12,7 @@ const Contact = () => {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl font-extrabold text-gray-900">Contact Us</h2>
           <p className="mt-4 text-lg font-light text-gray-600">
-            Have a question or need assistance? We're here to help! Reach out to us through any of the channels below, and we'll get back to you as soon as possible.
+            Have a question or need assistance? We&apos;re here to help! Reach out to us through any of the channels below, and we&apos;ll get back to you as soon as possible.
           </p>
         </div>
 
@@ -43,7 +43,7 @@ const Contact = () => {
               <a href="mailto:support@gadgethub.com">
                 <FaEnvelope className="text-4xl mb-4 mx-auto text-red-500" />
                 <h4 className="text-xl font-bold">Email</h4>
-                <p className="text-sm">Send us an email, and we'll reply within 24 hours.</p>
+                <p className="text-sm">Send us an email, and we&apos;ll reply within 24 hours.</p>
               </a>
             </div>
           </div>
@@ -106,9 +106,9 @@ const Contact = () => {
               </div>
             </form>
           </div>
-
         </div>
       </div>
+
 
       <Footer />
 

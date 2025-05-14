@@ -2,11 +2,12 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import Image from "next/image";
 import Navbar from "./components/NavBar";
 import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
 
-const page = () => {
+const Page = () => {
   const slides = [
     {
       id: 1,
@@ -157,25 +158,21 @@ const page = () => {
   ];
 
   const [current, setCurrent] = useState(0);
-
-  // Get the total number of slides
   const totalSlides = slides.length;
 
-  // Set up the automatic slide change every 4 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
     }, 4000);
 
-    // Cleanup the interval when the component unmounts
     return () => clearInterval(interval);
   }, [totalSlides]);
 
   return (
     <div>
       <Navbar />
-
       <SearchBar />
+
       {/* Slider */}
       <div className="bg-cover bg-center w-full h-full">
         <div className="overflow-hidden relative">
@@ -188,12 +185,14 @@ const page = () => {
                 className="w-screen flex justify-center items-center"
                 key={slide.id}
               >
-                {/* Image container */}
                 <div className="mt-10 h-full w-full lg:mt-10 xl:mt-10 relative flex lg:h-[50vh] xl:h-[50vh] 2xl:h-[50vh]">
-                  <img
+                  <Image
                     src={slide.image}
                     alt={slide.name}
                     className="w-full h-full object-cover"
+                    layout="responsive"
+                    width={500}
+                    height={500}
                   />
                 </div>
               </div>
@@ -201,28 +200,26 @@ const page = () => {
           </div>
         </div>
       </div>
-      {/* SLIDER ENDS */}
 
-      {/*SECTION 2 GRIDS  */}
+      {/* Product Categories */}
       <div className="bg-gray-100 p-5">
-        {/* Title */}
         <h2 className="text-[20px] md:text-[24px] lg:text-[24px] font-bold mb-3">
           Product Categories
         </h2>
-        {/* Grid */}
         <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-stretch">
           {gridData.map((item) => (
             <Link href={item.link} key={item.id}>
               <div className="bg-white group cursor-pointer rounded-lg border p-3 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
-                {/* Image Container */}
                 <div className="aspect-square overflow-hidden rounded-lg">
-                  <img
+                  <Image
                     src={item.image}
                     alt={item.category}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    layout="responsive"
+                    width={500}
+                    height={500}
                   />
                 </div>
-                {/* Category Name */}
                 <h3 className="text-md font-semibold text-center mt-4 flex-grow flex items-center justify-center">
                   {item.category}
                 </h3>
@@ -230,11 +227,9 @@ const page = () => {
             </Link>
           ))}
         </div>
-
       </div>
-      {/* SECTION 2 ENDS */}
 
-      {/* SECTION 3 SURFACE */}
+      {/* Surface Section */}
       <Link href="/surface">
         <div className="bg-cover bg-center w-full h-full">
           <div className="overflow-hidden relative">
@@ -247,10 +242,15 @@ const page = () => {
                   className="w-screen lg:h-[30vh] flex justify-center items-center"
                   key={slide.id}
                 >
-                  {/* Image container */}
                   <div className="mt-3 relative h-full w-full flex lg:w-[100vw] lg:h-[100vh]">
-                    <img src={slide.image} alt="" className="object-contain" />
-                    {/* Centered text */}
+                    <Image
+                      src={slide.image}
+                      alt=""
+                      className="object-contain"
+                      layout="intrinsic"
+                      width={500}
+                      height={500}
+                    />
                     <div className="absolute inset-0 flex justify-center items-center text-white">
                       <p className="text-2xl md:text-4xl lg:text-5xl font-thin text-white text-center px-4">
                         Introducing Surface Laptops
@@ -263,9 +263,8 @@ const page = () => {
           </div>
         </div>
       </Link>
-      {/* SECTION 3 SURFACE ENDS */}
 
-      {/* SECTION 4 GOOD DEALS */}
+      {/* Good Deals */}
       <div className="bg-gray-100 p-4 sm:p-6 lg:p-8">
         <h2 className="text-[20px] sm:text-2xl md:text-[20px] lg:text-[24px] font-bold mb-4 md:mb-6 ">
           CHECK OUT AVAILABLE GOOD DEALS
@@ -276,27 +275,26 @@ const page = () => {
               key={item.id || index}
               className="bg-white group cursor-pointer rounded-lg border p-2 space-y-2 hover:shadow-lg transition-shadow duration-300"
             >
-              {/* Image Container */}
               <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
-                <img
+                <Image
                   src={item.image}
                   alt={item.name}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  width={500}
+                  height={500}
+                  layout="intrinsic"
                 />
               </div>
-              {/* Product Name */}
               <h2 className="text-md sm:text-lg font-semibold text-center">
                 {item.name}
               </h2>
-              {/* Product Price */}
               <p className="text-lg sm:text-lg font-medium text-center">
                 {item.price}
               </p>
             </div>
           ))}
         </div>
-        {/* Link to See More */}
-        <div className="flex justify-end sm:justify-end lg:justify-end xl:justify-end 2xl:justify-end mt-6">
+        <div className="flex justify-end mt-6">
           <Link
             href="/New"
             className="flex items-center text-blue-600 hover:text-blue-400 transition-colors"
@@ -305,9 +303,8 @@ const page = () => {
           </Link>
         </div>
       </div>
-      {/* SECTION 4 GOOD DEALS END */}
 
-      {/* SECTION 5 NEW ARRIVALS */}
+      {/* New Arrivals */}
       <div className="bg-gray-100 p-4 sm:p-6 lg:p-8">
         <h2 className="text-[20px] sm:text-2xl md:text-[24px] font-bold mb-4 ">
           CHECK OUT NEW PRODUCTS
@@ -318,27 +315,26 @@ const page = () => {
               key={item.id || index}
               className="bg-white group rounded-lg border p-2 space-y-3 hover:shadow-lg transition-shadow duration-300"
             >
-              {/* Image Container */}
               <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
-                <img
+                <Image
                   src={item.image}
                   alt={item.name}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  width={500}
+                  height={500}
+                  layout="intrinsic"
                 />
               </div>
-              {/* Product Name */}
               <h2 className="text-md sm:text-lg font-bold text-center">
                 {item.name}
               </h2>
-              {/* Product Price */}
               <p className="text-lg sm:text-lg font-medium text-center">
                 {item.price}
               </p>
             </div>
           ))}
         </div>
-        {/* Link to See More */}
-        <div className="flex justify-end sm:justify-end lg:justify-end xl:justify-end 2xl:justify-end mt-6">
+        <div className="flex justify-end mt-6">
           <Link
             href="/New"
             className="flex items-center text-blue-600 hover:text-blue-400 transition-colors"
@@ -347,12 +343,10 @@ const page = () => {
           </Link>
         </div>
       </div>
-      {/* SECTION 5 NEW ARRIVALS END */}
 
       <Footer />
     </div>
   );
 };
 
-export default page;
-
+export default Page;

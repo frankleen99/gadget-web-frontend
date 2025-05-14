@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import Navbar from "../components/NavBar";
 import Footer from "../components/Footer";
 
@@ -57,9 +58,11 @@ const Page: React.FC = () => {
               key={product.id}
               className="rounded-[20px] p-4 shadow-md hover:shadow-lg transition-shadow bg-[#fff] border border-gray-300 overflow-hidden"
             >
-              <img
+              <Image
                 src={product.image || "/fallback-image.png"}
                 alt={product.name}
+                width={500}
+                height={200}
                 className="w-full h-40 object-cover rounded-t-[20px] mb-4"
               />
               <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
@@ -70,7 +73,7 @@ const Page: React.FC = () => {
           ))}
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

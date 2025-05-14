@@ -1,8 +1,6 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-
-import Searchbar from "./SearchBar";
 import { FaBars, FaShoppingCart } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoMdContact } from "react-icons/io";
