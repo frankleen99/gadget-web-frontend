@@ -90,11 +90,12 @@ export default function Home() {
                         <p className="text-gray-700 text-lg leading-relaxed">
                             Our mission is to redefine how people access modern
                             gadgets—ranging from everyday essentials to advanced tech tools.
-                            Whether it's mobile devices, smart accessories, audio gear,
+                            Whether it&apos;s mobile devices, smart accessories, audio gear,
                             computing hardware, or emerging tech, we aim to deliver
                             convenience, quality, and innovation through a seamless digital
                             experience.
                         </p>
+
                     </div>
 
                     {/* Vision */}
@@ -105,9 +106,10 @@ export default function Home() {
                         <p className="text-gray-700 text-lg leading-relaxed">
                             Our vision is to become the go-to tech destination for individuals
                             and businesses alike—empowering lives through access to a wide
-                            range of trusted and futuristic gadgets. We’re building a smarter,
+                            range of trusted and futuristic gadgets. We&apos;re building a smarter,
                             connected world, one device at a time.
                         </p>
+
                     </div>
                 </div>
             </div>
