@@ -1,81 +1,114 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import Navbar from "../components/NavBar";
-import Footer from "../components/Footer";
+'use client';
+
+import { ReactNode, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabaseClient';
+import Image from 'next/image';
+import Navbar from '../components/NavBar';
+import Footer from '../components/Footer';
 
 type Product = {
-  id: number;
-  category: string;
-  name: string;
-  price: string;
-  image: string;
-  details: string[];
+  title: ReactNode;
+  id: string;
+  image_url: string;
   description: string;
+  price: number;
+  rating: number;
+  category: string;
 };
 
-const Page: React.FC = () => {
+export default function SpeakerPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    const API_URL =
-      process.env.NEXT_PUBLIC_API_URL || "https://gadget-web-api.onrender.com";
+    const fetchRouter = async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('category', 'router');
 
-    async function fetchProducts() {
-      try {
-        const res = await fetch(`${API_URL}/category/routers`);
-        if (!res.ok) throw new Error("Failed to fetch products");
-        const data: Product[] = await res.json();
-        console.log("Fetched Products:", data);
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
+      if (error) {
+        console.error('Error fetching router:', error);
+      } else {
+        setProducts(data || []);
       }
-    }
 
-    fetchProducts();
+      setLoading(false);
+    };
+
+    fetchRouter();
   }, []);
+
+  const handleCardClick = (id: string) => {
+    router.push(`/details/${id}`);
+  };
 
   if (loading)
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="spinner border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
+        <div
+          className="border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"
+          aria-label="Loading spinner"
+          role="status"
+        />
       </div>
     );
 
   return (
     <div>
       <Navbar />
-      <div className="min-h-screen px-4 sm:px-6 lg:px-8 mt-40">
-        <h1 className="text-2xl font-bold my-6">Product Listings</h1>
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 bg-[#fff]">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="rounded-[20px] p-4 shadow-md hover:shadow-lg transition-shadow bg-[#fff] border border-gray-300 overflow-hidden"
-            >
-              <Image
-                src={product.image || "/fallback-image.png"}
-                alt={product.name}
-                width={500}
-                height={200}
-                className="w-full h-40 object-cover rounded-t-[20px] mb-4"
-              />
-              <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-              <p className="text-blue-600 font-medium text-md mb-4">
-                {product.price}
-              </p>
-            </div>
-          ))}
-        </div>
+      <div className="min-h-screen px-4 sm:px-6 lg:px-8 mt-10 p-6">
+        <h1 className="text-3xl font-bold mb-6">Router</h1>
+
+        {products.length === 0 ? (
+          <p>No router found.</p>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6 bg-[#fff]">
+            {products.map((product) => (
+              <div
+                key={product.id}
+                className="rounded-[20px] p-4 shadow-md hover:shadow-lg transition-shadow bg-[#fff] border border-gray-300 overflow-hidden cursor-pointer max-w-full"
+                onClick={() => handleCardClick(product.id)}
+                style={{ minWidth: '300px' }}
+              >
+                <Image
+                  src={product.image_url}
+                  alt="product"
+                  width={500}
+                  height={200}
+                  className="w-full h-40 md:h-48 object-cover rounded mb-4"
+                />
+                <h3 className="text-lg font-semibold mb-1">{product.title}</h3>
+                <p className="text-blue-600 font-medium text-md mb-1">
+                  ₦{product.price.toLocaleString()}
+                </p>
+
+
+                <p className="flex items-center text-yellow-500 text-xl font-semibold">
+                  {Array.from({ length: Math.round(product.rating) }).map((_, i) => (
+                    <svg
+                      key={i}
+                      className="w-3 h-3 fill-current"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M10 15l-5.878 3.09L5.82 11.18 1 7.09l6.061-.52L10 1l2.939 5.57 6.061.52-4.82 4.09 1.698 6.91z" />
+                    </svg>
+                  ))}
+                  <span className="ml-3 text-gray-500 text-[14px] ">
+                    ({product.rating}/5)
+                  </span>
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
+
       <Footer />
     </div>
   );
-};
-
-export default Page;
+}

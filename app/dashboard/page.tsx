@@ -1,272 +1,268 @@
-// "use client";
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import Navbar from "../components/NavBar";
-// import Footer from "../components/Footer";
+'use client';
 
-// const Dashboard = () => {
-//     const [formData, setFormData] = useState({
-//         name: "",
-//         description: "",
-//         price: "",
-//         rating: "",
-//     });
-//     const [coverImage, setCoverImage] = useState<File | null>(null);
-//     const [parlorImage, setParlorImage] = useState<File | null>(null);
-//     const [bedroomImage, setBedroomImage] = useState<File | null>(null);
-//     const [bathroomImage, setBathroomImage] = useState<File | null>(null);
-//     const [responseMessage, setResponseMessage] = useState("");
-//     const [propertyId, setPropertyId] = useState<string | null>(null);
-//     const [deleteId, setDeleteId] = useState<string>("");
-//     const [isLoggedIn, setIsLoggedIn] = useState(false);
+import React, { useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
+import Navbar from '../components/NavBar';
+import Footer from '../components/Footer';
 
-//     useEffect(() => {
-//         const token = localStorage.getItem("authToken");
-//         if (token) {
-//             setIsLoggedIn(true); // User is logged in
-//         }
-//     }, []);
+export default function AdminDashboard() {
+  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState('');
+  const [price, setPrice] = useState('');
+  const [rating, setRating] = useState('');
+  const [category, setCategory] = useState('');
+  const [imageFiles, setImageFiles] = useState<(File | null)[]>([null, null, null]);
+  const [uploading, setUploading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [deleteId, setDeleteId] = useState('');
 
-//     const handleInputChange = (
-//         e: React.ChangeEvent<
-//             HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-//         >
-//     ) => {
-//         setFormData({
-//             ...formData,
-//             [e.target.name]: e.target.value,
-//         });
-//     };
+  const handleFileChange = (index: number, file: File | null) => {
+    const newFiles = [...imageFiles];
+    newFiles[index] = file;
+    setImageFiles(newFiles);
+  };
 
-//     const handleFileChange = (
-//         e: React.ChangeEvent<HTMLInputElement>,
-//         setFile: React.Dispatch<React.SetStateAction<File | null>>
-//     ) => {
-//         if (e.target.files && e.target.files[0]) {
-//             setFile(e.target.files[0]);
-//         }
-//     };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-//     const handleSubmit = async (e: React.FormEvent) => {
-//         e.preventDefault();
+    if (!imageFiles[0] || !description || !title || !price || !rating || !category) {
+      setMessage('Please fill all fields and at least the first image.');
+      return;
+    }
 
-//         const form = new FormData();
-//         Object.entries(formData).forEach(([key, value]) => {
-//             form.append(key, value.toString());
-//         });
-//         if (coverImage) form.append("cover_image", coverImage);
-//         if (parlorImage) form.append("parlor_image", parlorImage);
-//         if (bedroomImage) form.append("bedroom_image", bedroomImage);
-//         if (bathroomImage) form.append("bathroom_image", bathroomImage);
+    setUploading(true);
+    setMessage('');
 
-//         try {
-//             const token = localStorage.getItem("authToken");
-//             if (!token) {
-//                 setResponseMessage("You are not authorized. Please log in.");
-//                 return;
-//             }
+    try {
+      const uploadedUrls: string[] = [];
 
-//             let response;
-//             if (propertyId) {
-//                 // PUT or PATCH method (Update property)
-//                 response = await axios.put(
-//                     `https://elbisapi.onrender.com/v1/api/properties/${propertyId}`,
-//                     form,
-//                     {
-//                         headers: {
-//                             Authorization: `Bearer ${token}`,
-//                         },
-//                     }
-//                 );
-//             } else {
-//                 // POST method (Create new property)
-//                 response = await axios.post(
-//                     "https://elbisapi.onrender.com/v1/api/properties",
-//                     form,
-//                     {
-//                         headers: {
-//                             Authorization: `Bearer ${token}`,
-//                         },
-//                     }
-//                 );
-//             }
+      for (let i = 0; i < imageFiles.length; i++) {
+        const file = imageFiles[i];
+        if (!file) {
+          uploadedUrls.push('');
+          continue;
+        }
 
-//             if (response.data.success) {
-//                 setResponseMessage(
-//                     propertyId
-//                         ? "Property updated successfully!"
-//                         : "Property uploaded successfully!"
-//                 );
-//                 console.log("Upload successful:", response.data);
-//                 setFormData({
-//                     name: "",
-//                     description: "",
-//                     price: "",
-//                     rating: "",
-//                 });
-//                 setCoverImage(null);
-//                 setParlorImage(null);
-//                 setBedroomImage(null);
-//                 setBathroomImage(null);
-//                 setPropertyId(null); // Reset propertyId after successful submission
-//             } else {
-//                 setResponseMessage("Error uploading property.");
-//             }
-//         } catch (error) {
-//             console.error("Upload error:", error);
-//             setResponseMessage("Please try again.");
-//         }
-//     };
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Date.now()}-${i}.${fileExt}`;
+        const filePath = `${fileName}`;
 
-//     const handleDelete = async () => {
-//         if (!deleteId) {
-//             setResponseMessage("Please enter a property ID to delete.");
-//             return;
-//         }
+        const { error: uploadError } = await supabase.storage
+          .from('products-images')
+          .upload(filePath, file, {
+            cacheControl: '3600',
+            upsert: false,
+          });
 
-//         try {
-//             const token = localStorage.getItem("authToken");
-//             if (!token) {
-//                 setResponseMessage("You are not authorized. Please log in.");
-//                 return;
-//             }
+        if (uploadError) {
+          setMessage('Error uploading image: ' + uploadError.message);
+          setUploading(false);
+          return;
+        }
 
-//             console.log("Attempting to delete property with ID:", deleteId);
+        const { data: publicUrlData } = supabase.storage
+          .from('products-images')
+          .getPublicUrl(filePath);
 
-//             const response = await axios.delete(
-//                 `https://elbisapi.onrender.com/v1/api/properties/${deleteId}`,
-//                 {
-//                     headers: {
-//                         Authorization: `Bearer ${token}`,
-//                     },
-//                 }
-//             );
+        uploadedUrls.push(publicUrlData.publicUrl);
+      }
 
-//             console.log("Delete response:", response.data);
+      const [image_url, image_url2, image_url3] = uploadedUrls;
 
-//             if (response.data.success) {
-//                 setResponseMessage("Property deleted successfully!");
-//                 setDeleteId(""); // Clear the delete ID input after successful deletion
-//             } else {
-//                 setResponseMessage("Error deleting property.");
-//             }
-//         } catch (error) {
-//             console.error("Delete error:", error);
-//             setResponseMessage("Failed to delete property. Please try again.");
-//         }
-//     };
+      const { error: insertError } = await supabase.from('products').insert([
+        {
+          image_url,
+          image_url2,
+          image_url3,
+          title,
+          description,
+          price: parseFloat(price),
+          rating: parseFloat(rating),
+          category,
+        },
+      ]);
 
-//     return (
+      if (insertError) {
+        setMessage('Error saving product: ' + insertError.message);
+        setUploading(false);
+        return;
+      }
 
-//         <div>
-//             <Navbar />
-//             <div className="min-h-screen flex flex-col lg:flex-row items-start justify-center gap-10 bg-gray-50 px-4 sm:px-6 lg:px-8 py-10">
+      setMessage('✅ Product uploaded successfully!');
+      setTitle('');
+      setDescription('');
+      setPrice('');
+      setRating('');
+      setCategory('');
+      setImageFiles([null, null, null]);
+      for (let i = 0; i < 3; i++) {
+        const input = document.getElementById(`imageInput${i}`) as HTMLInputElement;
+        if (input) input.value = '';
+      }
+    } catch (error) {
+      setMessage('Unexpected error: ' + error);
+    }
 
-//                 {/* Upload/Edit Form */}
-//                 <form
-//                     onSubmit={handleSubmit}
-//                     className="w-full max-w-xl bg-white p-8 sm:p-10 rounded-xl shadow-xl border border-gray-200 space-y-6"
-//                 >
-//                     <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">
-//                         {propertyId ? "Edit Property" : "Upload Property"}
-//                     </h2>
+    setUploading(false);
+  };
 
-//                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-//                         <textarea
-//                             name="name"
-//                             placeholder="Name"
-//                             onChange={handleInputChange}
-//                             className="p-3 border border-gray-300 rounded-lg resize-none"
-//                             required
-//                         />
-//                         <textarea
-//                             name="description"
-//                             placeholder="Description"
-//                             onChange={handleInputChange}
-//                             className="p-3 border border-gray-300 rounded-lg resize-none"
-//                             required
-//                         />
-//                         <input
-//                             type="text"
-//                             name="price"
-//                             placeholder="Price"
-//                             onChange={handleInputChange}
-//                             className="p-3 border border-gray-300 rounded-lg"
-//                             required
-//                         />
-//                         <input
-//                             type="number"
-//                             name="rating"
-//                             placeholder="Rating"
-//                             onChange={handleInputChange}
-//                             className="p-3 border border-gray-300 rounded-lg"
-//                             required
-//                         />
-//                     </div>
+  //  Updated delete function
+  const handleDelete = async () => {
+    if (!deleteId || deleteId.trim() === '') {
+      setMessage('❌ Please enter a valid ID to delete.');
+      return;
+    }
 
-//                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-//                         <input
-//                             type="file"
-//                             onChange={(e) => handleFileChange(e, setCoverImage)}
-//                             className="p-3 border border-gray-300 rounded-lg"
-//                         />
-//                         <input
-//                             type="file"
-//                             onChange={(e) => handleFileChange(e, setParlorImage)}
-//                             className="p-3 border border-gray-300 rounded-lg"
-//                         />
-//                         <input
-//                             type="file"
-//                             onChange={(e) => handleFileChange(e, setBedroomImage)}
-//                             className="p-3 border border-gray-300 rounded-lg"
-//                         />
-//                     </div>
+    const idToDelete = deleteId.trim();
 
-//                     <button
-//                         type="submit"
-//                         className="w-full py-3 font-semibold rounded-lg text-white bg-black shadow-md transition duration-300 ease-in-out hover:opacity-90"
-//                     >
-//                         Submit
-//                     </button>
-//                 </form>
+    const { error } = await supabase
+      .from('products')
+      .delete()
+      .eq('id', idToDelete);
 
-//                 {/* Delete Section */}
-//                 <div className="w-full max-w-md bg-white p-8 sm:p-10 rounded-xl shadow-xl border border-gray-200">
-//                     <h3 className="text-3xl font-bold text-center text-gray-800 mb-6">
-//                         Delete Property
-//                     </h3>
-//                     <input
-//                         type="text"
-//                         value={deleteId}
-//                         onChange={(e) => setDeleteId(e.target.value)}
-//                         placeholder="Enter Property ID to delete"
-//                         className="w-full p-3 border border-gray-300 rounded-lg mb-5"
-//                     />
-//                     <button
-//                         onClick={handleDelete}
-//                         className="w-full text-white py-3 rounded-lg shadow-md font-semibold bg-black transition duration-300 ease-in-out hover:opacity-90"
-//                     >
-//                         Delete Property
-//                     </button>
-//                 </div>
+    if (error) {
+      setMessage('❌ Error deleting product: ' + error.message);
+    } else {
+      setMessage(`✅ Product with ID ${idToDelete} deleted.`);
+      setDeleteId('');
+    }
+  };
 
-//             </div>
-//             <Footer />
-
-//         </div>
-
-//     );
-// };
-
-// export default Dashboard;
-
-
-import React from 'react'
-
-const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div>
+      <Navbar />
+      <div className="max-w-5xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-10 mb-20">
+        <h1 className="text-3xl font-bold mb-6 text-center">🛒 Admin Product Dashboard</h1>
 
-export default page
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Image inputs in a row */}
+          <div className="flex flex-wrap gap-4 mb-6">
+            {[0, 1, 2].map((index) => (
+              <div key={index} className="flex-1 min-w-[150px]">
+                <label htmlFor={`imageInput${index}`} className="block font-semibold mb-1">
+                  Product Image {index + 1} {index === 0 && <span className="text-red-500">*</span>}
+                </label>
+                <input
+                  type="file"
+                  id={`imageInput${index}`}
+                  accept="image/*"
+                  onChange={(e) => handleFileChange(index, e.target.files?.[0] || null)}
+                  className="w-full border border-gray-300 rounded px-3 py-2"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Title */}
+          <div>
+            <label className="block font-semibold mb-1">Title</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="w-full border border-gray-300 rounded px-3 py-2"
+              placeholder="Enter product title"
+            />
+          </div>
+
+          {/* Description */}
+          <div>
+            <label className="block font-semibold mb-1">Description</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full border border-gray-300 rounded px-3 py-2"
+              rows={3}
+            />
+          </div>
+
+          {/* Price, Rating, Category in one row */}
+          <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0">
+            <div className="flex-1">
+              <label className="block font-semibold mb-1">Price (₦)</label>
+              <input
+                type="number"
+                step="0.01"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                className="w-full border border-gray-300 rounded px-3 py-2"
+                placeholder="Price"
+              />
+            </div>
+
+            <div className="flex-1">
+              <label className="block font-semibold mb-1">Rating (0 - 5)</label>
+              <input
+                type="number"
+                step="0.1"
+                min="0"
+                max="5"
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+                className="w-full border border-gray-300 rounded px-3 py-2"
+                placeholder="Rating"
+              />
+            </div>
+
+            <div className="flex-1">
+              <label className="block font-semibold mb-1">Category</label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full border border-gray-300 rounded px-3 py-2"
+              >
+                <option value="">Select Category</option>
+                <option value="computers">Computers</option>
+                <option value="accessories">Accessories</option>
+                <option value="phones">Phones</option>
+                <option value="speaker">Speaker</option>
+                <option value="router">Router</option>
+                <option value="watch">Watch</option>
+                <option value="gaming">Gaming</option>
+                <option value="tv">TV</option>
+                <option value="new">NewDeal</option>
+                <option value="goodDeals">GoodDeals</option>
+
+              </select>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={uploading}
+            className="bg-black text-white py-2 px-6 rounded hover:bg-gray-800 transition mx-auto block"
+          >
+            {uploading ? 'Uploading...' : 'Upload Product'}
+          </button>
+
+        </form>
+
+        <hr className="my-8" />
+
+        <div className="space-y-3">
+          <h2 className="text-xl font-bold">🗑️ Delete Product</h2>
+          <input
+            type="text"
+            placeholder="Enter Product ID to delete"
+            value={deleteId}
+            onChange={(e) => setDeleteId(e.target.value)}
+            className="w-full border border-gray-300 rounded px-3 py-2"
+          />
+          <button
+            onClick={handleDelete}
+            className="bg-red-600 text-white py-2 px-6 rounded hover:bg-red-700 transition mx-auto block"
+          >
+            Delete Product
+          </button>
+
+        </div>
+
+        {message && (
+          <p className="mt-6 text-center text-sm text-red-600 font-medium">{message}</p>
+        )}
+      </div>
+      <Footer />
+    </div>
+
+  );
+}

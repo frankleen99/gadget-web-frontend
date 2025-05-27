@@ -13,19 +13,19 @@ const Page = () => {
       id: 1,
       category: "Smartwatch",
       name: "applewatch series 5",
-      image: "../images/applewatch.jpg",
+      image: "/images/applewatch.jpg",
     },
     {
       id: 2,
       category: "Headphones",
       name: "Sony WH-1000XM5",
-      image: "../images/airpods.jpg",
+      image: "/images/airpods.jpg",
     },
     {
       id: 3,
       category: "Speakers",
       name: "Jbl charge 5",
-      image: "../images/jbl.jpg",
+      image: "/images/jbl.jpg",
     },
   ];
 
@@ -114,25 +114,25 @@ const Page = () => {
       id: 1,
       name: "Brand new(No BOX) Non-active Iphone 15 pro max 256gb",
       price: "N1,650,000",
-      image: "../images/15promax.webp",
+      image: "/images/15promax.webp",
     },
     {
       id: 2,
       name: "Brand new(No BOX) Non-active Samsung s24 ultra 256gb",
       price: "N1,550,000",
-      image: "../images/s24ultra.jpg",
+      image: "/images/s24ultra.jpg",
     },
     {
       id: 3,
       name: "Brand new ipad pro M1 chip 12.9 inches 256gb wifi-cellular",
       price: "N1,300,000",
-      image: "../images/ipadprom1.jpg",
+      image: "/images/ipadprom1.jpg",
     },
     {
       id: 4,
       name: "Brand new Non-active Samsung fold 6 512gb DUal sim",
       price: "N2,400,000",
-      image: "../images/fold6.webp",
+      image: "/images/fold6.webp",
     },
   ];
 
@@ -141,19 +141,19 @@ const Page = () => {
       id: 1,
       name: "Apple Airpods Max",
       price: "N800,000",
-      image: "../images/airpodsmax.webp",
+      image: "/images/airpodsmax.webp",
     },
     {
       id: 2,
       name: "JBL Pulse 4",
       price: "N200,000",
-      image: "../images/jblpulse4.jpg",
+      image: "/images/jblpulse4.jpg",
     },
     {
       id: 3,
       name: "Airpods Pro 2nd Gen",
       price: "N370,000",
-      image: "../images/airpodspro2.webp",
+      image: "/images/airpodspro2.webp",
     },
   ];
 
@@ -174,7 +174,7 @@ const Page = () => {
       <SearchBar />
 
       {/* Slider */}
-      <div className="bg-cover bg-center w-full h-full">
+      <div className="bg-cover bg-center w-full h-full mt-4 md:mt-0">
         <div className="overflow-hidden relative">
           <div
             className="w-max h-50px flex transition-all ease-in-out duration-1000"
@@ -203,23 +203,26 @@ const Page = () => {
 
       {/* Product Categories */}
       <div className="bg-gray-100 p-5">
+        {/* Title */}
         <h2 className="text-[20px] md:text-[24px] lg:text-[24px] font-bold mb-3">
           Product Categories
         </h2>
+        {/* Grid */}
         <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-stretch">
           {gridData.map((item) => (
             <Link href={item.link} key={item.id}>
               <div className="bg-white group cursor-pointer rounded-lg border p-3 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
+                {/* Image Container */}
                 <div className="aspect-square overflow-hidden rounded-lg">
                   <Image
                     src={item.image}
                     alt={item.category}
+                    width={50}
+                    height={50}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    layout="responsive"
-                    width={500}
-                    height={500}
                   />
                 </div>
+                {/* Category Name */}
                 <h3 className="text-md font-semibold text-center mt-4 flex-grow flex items-center justify-center">
                   {item.category}
                 </h3>
@@ -227,10 +230,11 @@ const Page = () => {
             </Link>
           ))}
         </div>
+
       </div>
 
       {/* Surface Section */}
-      <Link href="/surface">
+      <Link href="/computers">
         <div className="bg-cover bg-center w-full h-full">
           <div className="overflow-hidden relative">
             <div
@@ -242,15 +246,16 @@ const Page = () => {
                   className="w-screen lg:h-[30vh] flex justify-center items-center"
                   key={slide.id}
                 >
+                  {/* Image container */}
                   <div className="mt-3 relative h-full w-full flex lg:w-[100vw] lg:h-[100vh]">
                     <Image
                       src={slide.image}
-                      alt=""
+                      alt="product"
+                      width={50}
+                      height={20}
                       className="object-contain"
-                      layout="intrinsic"
-                      width={500}
-                      height={500}
                     />
+                    {/* Centered text */}
                     <div className="absolute inset-0 flex justify-center items-center text-white">
                       <p className="text-2xl md:text-4xl lg:text-5xl font-thin text-white text-center px-4">
                         Introducing Surface Laptops

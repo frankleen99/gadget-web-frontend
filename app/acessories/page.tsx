@@ -17,20 +17,20 @@ type Product = {
   category: string;
 };
 
-export default function GamesPage() {
+export default function AcessoriesPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchGames = async () => {
+    const fetchAcessories = async () => {
       const { data, error } = await supabase
         .from('products')
         .select('*')
-        .eq('category', 'gaming');
+        .eq('category', 'accessories');
 
       if (error) {
-        console.error('Error fetching games:', error);
+        console.error('Error fetching acessories:', error);
       } else {
         setProducts(data || []);
       }
@@ -38,7 +38,7 @@ export default function GamesPage() {
       setLoading(false);
     };
 
-    fetchGames();
+    fetchAcessories();
   }, []);
 
   const handleCardClick = (id: string) => {
@@ -61,10 +61,10 @@ export default function GamesPage() {
       <Navbar />
 
       <div className="min-h-screen px-4 sm:px-6 lg:px-8 mt-10 p-6">
-        <h1 className="text-3xl font-bold mb-6">Games And Consoles</h1>
+        <h1 className="text-3xl font-bold mb-6">Acessories</h1>
 
         {products.length === 0 ? (
-          <p>No Games And Consoles found.</p>
+          <p>No acessories found.</p>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6 bg-[#fff]">
             {products.map((product) => (
