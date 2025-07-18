@@ -70,7 +70,7 @@ const Cart = () => {
     <>
       <Navbar />
       <div className="min-h-screen bg-gray-100 py-10 px-4 sm:px-6 lg:px-16">
-        <h1 className="text-3xl font-bold mb-8 text-gray-800">Cart Summary</h1>
+        <h1 className="text-2xl font-bold mb-8 text-gray-800">Cart Summary</h1>
 
         {cartItems.length === 0 ? (
           <p className="text-center text-gray-600 text-xl">Your cart is empty.</p>
@@ -92,7 +92,7 @@ const Cart = () => {
                       className="rounded-lg object-cover"
                     />
                     <div>
-                      <h1 className="text-xl font-bold text-gray-900">
+                      <h1 className="text-sm font-bold text-gray-900">
                         {item.title || 'No title'}
                       </h1>
 

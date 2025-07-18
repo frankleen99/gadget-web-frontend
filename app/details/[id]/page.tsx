@@ -1,12 +1,12 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import Image from 'next/image';
-import { supabase } from '@/lib/supabaseClient';
-import { ReactNode } from 'react';
-import { User } from '@supabase/supabase-js';
-import Navbar from '@/app/components/NavBar';
-import Footer from '@/app/components/Footer';
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
+import Image from "next/image";
+import { supabase } from "@/lib/supabaseClient";
+import { ReactNode } from "react";
+import { User } from "@supabase/supabase-js";
+import Navbar from "@/app/components/NavBar";
+import Footer from "@/app/components/Footer";
 
 type Product = {
   title: ReactNode;
@@ -54,13 +54,15 @@ export default function ProductDetailsPage() {
 
     const fetchProduct = async () => {
       const { data, error } = await supabase
-        .from('products')
-        .select('id, image_url, image_url2, image_url3, description, price, title, rating, category')
-        .eq('id', id)
+        .from("products")
+        .select(
+          "id, image_url, image_url2, image_url3, description, price, title, rating, category"
+        )
+        .eq("id", id)
         .single();
 
       if (error) {
-        console.error('Error fetching product:', error);
+        console.error("Error fetching product:", error);
         setProduct(null);
       } else {
         setProduct(data);
@@ -90,9 +92,9 @@ export default function ProductDetailsPage() {
     <div>
       <Navbar />
 
-       
       <main className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden">
+          {/* routes back to previous page */}
           <div className="p-4">
             <button
               onClick={() => router.back()}
@@ -125,7 +127,9 @@ export default function ProductDetailsPage() {
                       key={index}
                       onClick={() => setSelectedImage(url!)}
                       className={`relative w-20 h-20 rounded-lg cursor-pointer border ${
-                        selectedImage === url ? 'border-indigo-600' : 'border-gray-300'
+                        selectedImage === url
+                          ? "border-indigo-600"
+                          : "border-gray-300"
                       }`}
                     >
                       <Image
@@ -142,36 +146,45 @@ export default function ProductDetailsPage() {
 
             {/* Info Section */}
             <div className="flex flex-col justify-center space-y-4">
-              <h1 className="text-3xl font-bold text-gray-900">{product.title}</h1>
-              <h2 className="text-lg text-gray-600">{product.description}</h2>
+              <h1 className="text-2xl font-bold text-gray-900">
+                {product.title}
+              </h1>
+              <h2 className="text-sm text-gray-600">{product.description}</h2>
               <p className="text-blue-600 font-medium text-md mb-1">
                 ₦{product.price.toLocaleString()}
               </p>
 
               {/* Rating */}
               <div className="flex items-center text-yellow-500">
-                {Array.from({ length: Math.round(product.rating) }).map((_, i) => (
-                  <svg
-                    key={i}
-                    className="w-5 h-5 fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M10 15l-5.878 3.09L5.82 11.18 1 7.09l6.061-.52L10 1l2.939 5.57 6.061.52-4.82 4.09 1.698 6.91z" />
-                  </svg>
-                ))}
-                <span className="ml-2 text-sm text-gray-500">({product.rating}/5)</span>
+                {Array.from({ length: Math.round(product.rating) }).map(
+                  (_, i) => (
+                    <svg
+                      key={i}
+                      className="w-5 h-5 fill-current"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M10 15l-5.878 3.09L5.82 11.18 1 7.09l6.061-.52L10 1l2.939 5.57 6.061.52-4.82 4.09 1.698 6.91z" />
+                    </svg>
+                  )
+                )}
+                <span className="ml-2 text-sm text-gray-500">
+                  ({product.rating}/5)
+                </span>
               </div>
 
               {/* Category */}
               <p className="text-sm text-gray-600 uppercase">
-                Category:{' '}
-                <span className="font-semibold text-indigo-800">{product.category}</span>
+                Category:{" "}
+                <span className="font-semibold text-indigo-800">
+                  {product.category}
+                </span>
               </p>
 
               <p className="text-base text-gray-700 leading-relaxed">
-                This product combines high-quality craftsmanship with modern technology to bring you an
-                outstanding experience. Perfect for your needs and designed to impress.
+                This product combines high-quality craftsmanship with modern
+                technology to bring you an outstanding experience. Perfect for
+                your needs and designed to impress.
               </p>
 
               <p className="text-xs text-gray-500 italic">
@@ -182,11 +195,11 @@ export default function ProductDetailsPage() {
               <button
                 onClick={() => {
                   if (!user) {
-                    alert('Please login to add to cart.');
-                    router.push('/login');
+                    alert("Please login to add to cart.");
+                    router.push("/login");
                   } else {
                     const existingCart: CartItem[] = JSON.parse(
-                      localStorage.getItem('cartItems') || '[]'
+                      localStorage.getItem("cartItems") || "[]"
                     );
                     const itemIndex = existingCart.findIndex(
                       (item: CartItem) => item.id === product.id
@@ -204,8 +217,11 @@ export default function ProductDetailsPage() {
                       });
                     }
 
-                    localStorage.setItem('cartItems', JSON.stringify(existingCart));
-                    router.push('/cart');
+                    localStorage.setItem(
+                      "cartItems",
+                      JSON.stringify(existingCart)
+                    );
+                    router.push("/cart");
                   }
                 }}
                 className="w-full mt-4 py-3 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold transition-colors"

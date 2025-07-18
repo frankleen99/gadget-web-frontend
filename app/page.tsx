@@ -307,7 +307,6 @@ const Page = () => {
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     width={500}
                     height={500}
-                    layout="intrinsic"
                   />
                 </div>
                 <h2 className="text-md sm:text-lg font-semibold text-center">
@@ -349,7 +348,6 @@ const Page = () => {
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     width={500}
                     height={500}
-                    layout="intrinsic"
                   />
                 </div>
                 <h2 className="text-md sm:text-lg font-bold text-center">

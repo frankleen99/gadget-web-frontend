@@ -145,12 +145,12 @@ const Navbar = () => {
               size={25}
             />
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-8 bg-gray-300 shadow-lg rounded-lg w-40 p-2 z-50">
+              <div className="absolute right-0 mt-9 bg-gray-300 shadow-lg rounded-lg w-40 p-2 z-50">
                 <div className="flex flex-col gap-2">
                   {isLoggedIn ? (
                     <button
                       onClick={handleLogout}
-                      className="bg-white text-black px-3 py-1 rounded hover:bg-gray-200 mx-4"
+                      className="bg-white text-black px-3 py-1 mt-5 rounded hover:bg-gray-200 mx-4"
                     >
                       Logout
                     </button>
@@ -212,7 +212,7 @@ const Navbar = () => {
               Gaming
             </Link>
             <Link
-              href="/contact"
+              href="/contacts"
               onClick={toggleMenu}
               className="sm:text-[22px]"
             >
@@ -221,13 +221,16 @@ const Navbar = () => {
           </nav>
           <div className="mt-[50px] sm:mt-[70px] flex justify-center space-x-10">
             <div className="flex flex-col gap-2">
-              {isLoggedIn ? (
-                <button
-                  onClick={handleLogout}
-                  className="bg-black text-white pt-3 pb-3 pr-8 pl-8 text-[10px] sm:pt-5 sm:pb-5 sm:pl-10 sm:pr-10 rounded-lg sm:text-[18px] hover:bg-slate-900 transition ease-in-out"
-                >
-                  Logout
-                </button>
+              {isLoggedIn ?  (
+                <div>
+                  <span className="text-sm sm:inline">Hi, {userName}!</span>
+                  <button
+                    onClick={handleLogout}
+                    className="bg-black text-white pt-3 pb-3 pr-8 pl-8 text-[10px] sm:pt-5 sm:pb-5 sm:pl-10 sm:pr-10 rounded-lg sm:text-[18px] hover:bg-slate-900 transition ease-in-out"
+                  >
+                    Logout
+                  </button>
+                </div>
               ) : (
                 <>
                   <Link href="/login">
@@ -236,7 +239,7 @@ const Navbar = () => {
                     </div>
                   </Link>
                   <Link href="/signup">
-                    <div className="bbg-black text-white pt-3 pb-3 pr-8 pl-8 text-[10px] sm:pt-5 sm:pb-5 sm:pl-10 sm:pr-10 rounded-lg sm:text-[18px] hover:bg-slate-900 transition ease-in-out">
+                    <div className="bg-black text-white pt-3 pb-3 pr-8 pl-8 text-[10px] sm:pt-5 sm:pb-5 sm:pl-10 sm:pr-10 rounded-lg sm:text-[18px] hover:bg-slate-900 transition ease-in-out">
                       Sign Up
                     </div>
                   </Link>

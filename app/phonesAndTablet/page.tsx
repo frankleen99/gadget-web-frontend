@@ -60,13 +60,23 @@ export default function PhonePage() {
     <div>
       <Navbar />
 
-      <div className="min-h-screen px-4 sm:px-6 lg:px-8 mt-10 p-6">
-        <h1 className="text-3xl font-bold mb-6">Phones and Tablets</h1>
+      <div className="min-h-screen px-4 sm:px-6 lg:px-8 mt-2 p-6">
+        {/* routes back to previous page */}
+        <div>
+          <button
+            onClick={() => router.back()}
+            className="text-indigo-600 hover:text-indigo-900 font-semibold text-sm"
+          >
+            ← Back to Home
+          </button>
+        </div>
+
+        {/* main title */}
+        <h1 className="text-2xl font-bold mb-6">Phones and Tablets</h1>
 
         {products.length === 0 ? (
           <p>No phones and tablet found.</p>
         ) : (
-
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 bg-[#fff] px-2 md:px-4">
             {products.map((product) => (
               <div
