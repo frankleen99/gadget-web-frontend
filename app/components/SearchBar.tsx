@@ -134,7 +134,7 @@ const SearchInput = () => {
   };
 
   return (
-    <div className="relative w-[330px] lg:w-[600px] md:w-[600px] max-w-md mx-auto mt-10 z-0">
+    <div className="relative w-[330px] lg:w-[600px] md:w-[600px] max-w-md mx-auto mt-4 z-0">
       <input
         type="text"
         placeholder="Search..."

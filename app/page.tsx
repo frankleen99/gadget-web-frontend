@@ -9,6 +9,17 @@ import SearchBar from "./components/SearchBar";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
+import { Plus_Jakarta_Sans } from "next/font/google";
+import { Geist } from "next/font/google";
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["cyrillic-ext"],
+  weight: "700",
+});
+const geist = Geist({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 const Page = () => {
   const slides = [
@@ -91,50 +102,47 @@ const Page = () => {
     {
       id: 1,
       name: "Surface 2",
-      image:
-        "https://i.gadgets360cdn.com/large/microsoft_surface_2024_1711089102019.jpg",
+      image: "/images/surface5.jpg",
     },
     {
       id: 2,
       name: "Surface 3",
-      image:
-        "https://media.cnn.com/api/v1/images/stellar/prod/211007171916-underscored-surface-laptop-studio-lead-1.jpg?q=w_3014,h_1696,x_0,y_0,c_fill",
+      image: "/images/microsoftSurface1.jpg",
     },
     {
       id: 3,
       name: "Surface 4",
-      image:
-        "https://www.techadvisor.com/wp-content/uploads/2022/06/microsoft_surface_pro_4_review_7.jpg?quality=50&strip=all&w=1024",
+      image: "/images/microsoftSurface4.jpg",
     },
   ];
 
   const phoneData = [
     {
       id: 1,
-      name: "Brand new(No BOX) Non-active Iphone 15 pro max 256gb",
+      name: "Brand new(NO BOX) Non-active Iphone 15 pro max 256gb",
       price: "N1,650,000",
       image: "/images/15promax.webp",
       link: "/goodDeals/15promax",
     },
     {
       id: 2,
-      name: "Brand new(No BOX) Non-active Samsung s24 ultra 256gb",
+      name: "Brand new(NO BOX) Non-active Samsung s24 ultra 256gb",
       price: "N1,550,000",
-      image: "/images/s24ultra.jpg",
+      image: "/images/s23Ultra.jpg",
       link: "/goodDeals/s24ultra",
     },
     {
       id: 3,
-      name: "Brand new ipad pro M1 chip 12.9 inches 256gb wifi-cellular",
+      name: "Open box ipad pro M1 chip 12.9 inches 256gb wifi-cellular",
       price: "N1,300,000",
-      image: "/images/ipadprom1.jpg",
+      image: "/images/ipadProM1.jpg",
       link: "/goodDeals/ipadprom1",
     },
     {
       id: 4,
-      name: "Brand new Non-active Samsung fold 6 512gb DUal sim",
-      price: "N2,400,000",
-      image: "/images/fold6.webp",
+      name: "Fully functional Samsung fold 6 512gb DUal sim",
+      price: "N2,000,000",
+      image: "/images/zFold6.jpg",
       link: "/goodDeals/fold6",
     },
   ];
@@ -142,24 +150,31 @@ const Page = () => {
   const arrivalsData = [
     {
       id: 1,
-      name: "Apple Airpods Max",
+      name: "Brand new Non-active Apple Airpods Max",
       price: "N800,000",
-      image: "/images/airpodsmax.webp",
+      image: "/images/airpodsMax.jpg",
       link: "/new/airpodsmax",
     },
     {
       id: 2,
-      name: "JBL Pulse 4",
+      name: "Brand new JBL Pulse 4",
       price: "N200,000",
       image: "/images/jblpulse4.jpg",
       link: "/new/jblpulse4",
     },
     {
       id: 3,
-      name: "Airpods Pro 2nd Gen",
+      name: "Brand new Non-active Airpods Pro 2nd Gen",
       price: "N370,000",
       image: "/images/airpodspro2.webp",
       link: "/new/airpodspro2",
+    },
+    {
+      id: 4,
+      name: "Brand new Non-active Samsung fold 6 512gb DUal sim",
+      price: "N2,400,000",
+      image: "/images/Fold6.jpg",
+      link: "/goodDeals/fold6",
     },
   ];
 
@@ -175,13 +190,13 @@ const Page = () => {
   //   }, [totalSlides]);
 
   return (
-    <div className="max-w-full 2xl:max-w-[1800px] mx-auto">
+    <div className="max-w-full 2xl:max-w-[1800px] mx-auto ">
       {/* Navbar and Search Bar */}
       <Navbar />
       <SearchBar />
 
       {/* Slider */}
-      <div className="bg-cover bg-center max-w-full 2xl:max-w-[1800px] mx-auto">
+      <div className="bg-cover bg-center mt-3 max-w-full 2xl:max-w-[1800px] mx-auto relative">
         <div className="overflow-hidden relative">
           <Swiper
             modules={[Autoplay]}
@@ -197,15 +212,42 @@ const Page = () => {
             {slides.map((slide) => (
               <SwiperSlide key={slide.id}>
                 {/* Slide Content */}
-                <div className="w-full h-full flex justify-cente m items-center">
-                  <div className="mt-10 lg:mt-10 xl:mt-10 relative flex lg:h-[50vh] xl:h-[50vh] 2xl:h-[50vh]">
-                    <Image
-                      src={slide.image}
-                      alt={slide.name}
-                      className="w-screen h-full rounded-xl object-cover"
-                      width={500}
-                      height={500}
-                    />
+                <div className="w-full h-full relative ">
+                  {/* Background Image */}
+                  <Image
+                    src={slide.image}
+                    alt={slide.name}
+                    className="w-screen h-[50vh] object-cover"
+                    width={500}
+                    height={500}
+                  />
+
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/20" />
+
+                  {/* Hero Content */}
+                  <div className="absolute inset-0 flex items-center px-5 mt-5 sm:px-10 lg:px-20">
+                    <div className="text-white space-y-4 max-w-xl">
+                      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+                        Upgrade Your Tech Today
+                      </h1>
+                      <p className="text-base sm:text-lg text-gray-200">
+                        Discover gadgets that power your lifestyle — from phones
+                        to accessories.
+                      </p>
+
+                      {/* CTA + Promo Badge */}
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                        <Link href="/goodDeals">
+                          <button className="bg-white text-black font-semibold px-6 py-2 rounded-full hover:bg-gray-200 transition">
+                            Shop Now
+                          </button>
+                        </Link>
+                        <span className="bg-red-600 text-white text-xs px-3 py-1 rounded-full">
+                          🔥 Summer Sale - Up to 50% Off!
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </SwiperSlide>
@@ -217,28 +259,36 @@ const Page = () => {
       {/* Product Categories */}
       <div className="bg-gray-100 p-5">
         {/* Title */}
-        <h2 className="text-[20px] md:text-[24px] lg:text-[24px] font-bold mb-3">
-          Product Categories
+        <h2
+          className={`text-[30px] md:text-[34px] lg:text-[34px] mb-3 ${plusJakarta.className}`}
+        >
+          PRODUCT CATEGORIES
         </h2>
 
         {/* Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-stretch">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-3">
           {gridData.map((item) => (
             <Link href={item.link} key={item.id}>
-              <div className="bg-white group cursor-pointer rounded-lg border p-3 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
-                {/* Image Container */}
-                <div className="aspect-square overflow-hidden rounded-lg">
+              <div className="bg-white group cursor-pointer rounded-lg border p-2 lg:p-2 xl:p-3 hover:shadow-lg transition-shadow duration-500 flex flex-col h-full">
+                {/* Image Container with Overlay */}
+                <div className="relative aspect-square overflow-hidden rounded-lg">
+                  {/* Overlay */}
+                  <div className="absolute inset-0 group-hover:bg-black/30 transition duration-300 z-10" />
+
+                  {/* Image */}
                   <Image
                     src={item.image}
                     alt={item.category}
-                    width={400} //affects image quality
-                    height={400} //affects image quality
+                    width={400}
+                    height={400}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
 
                 {/* Category Name */}
-                <h3 className="text-md font-semibold text-center mt-4 flex-grow flex items-center justify-center">
+                <h3
+                  className={`text-md lg:text-xl xl:text-2xl text-center mt-4 flex-grow flex items-center justify-center ${geist.className}`}
+                >
                   {item.category}
                 </h3>
               </div>
@@ -257,7 +307,7 @@ const Page = () => {
               slidesPerView={1}
               loop={true}
               autoplay={{
-                delay: 3000,
+                delay: 5000,
                 disableOnInteraction: false,
               }}
               className="w-full h-full"
@@ -265,18 +315,20 @@ const Page = () => {
               {surfaceLaptop.map((slide) => (
                 <SwiperSlide key={slide.id}>
                   {/* Image container */}
-                  <div className="mt-3 relative flex w-full h-[50vh] lg:h-[40vh] xl:h-[35vh] 2xl:h-[30vh]">
+                  <div className="mt-3 relative flex w-full h-[35vh] md:h-[40vh] lg:h-[50vh] xl:h-[60vh] 2xl:h-[55vh]">
                     <Image
                       src={slide.image}
                       alt="product"
-                      width={400} //affects image quality
-                      height={400} //affects image quality
+                      width={400}
+                      height={400}
                       className="object-cover w-full h-full"
                     />
 
                     {/* Centered text */}
                     <div className="absolute inset-0 flex justify-center items-center text-white">
-                      <p className="text-2xl md:text-4xl lg:text-5xl font-thin text-white text-center px-4">
+                      <p
+                        className={`text-4xl sm:text-4xl md:text-6xl lg:text-6xl text-white text-center px-4 ${plusJakarta.className}`}
+                      >
                         Introducing Surface Laptops
                       </p>
                     </div>
@@ -290,17 +342,21 @@ const Page = () => {
 
       {/* Good Deals */}
       <Link href={"/goodDeals"}>
-        <div className="bg-gray-100 p-4 sm:p-6 lg:p-8">
-          <h2 className="text-[20px] sm:text-2xl md:text-[20px] lg:text-[24px] font-bold mb-4 md:mb-6 ">
+        <div className="bg-gray-100 p-3 sm:p-6 lg:p-8">
+          <h2
+            className={`text-[20px] md:text-[34px] lg:text-[34px] mb-4 ${plusJakarta.className}`}
+          >
             CHECK OUT AVAILABLE GOOD DEALS
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {phoneData.map((item, index) => (
               <div
                 key={item.id || index}
-                className="bg-white group cursor-pointer rounded-lg border p-2 space-y-2 hover:shadow-lg transition-shadow duration-300"
+                className="bg-white group cursor-pointer rounded-lg border p-2 lg:p-3 xl:p-3 space-y-2 hover:shadow-lg transition-shadow duration-500"
               >
-                <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+                <div className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden">
+                  {/* Overlay */}
+                  <div className="absolute inset-0 group-hover:bg-black/30 transition duration-300 z-10" />
                   <Image
                     src={item.image}
                     alt={item.name}
@@ -309,10 +365,14 @@ const Page = () => {
                     height={500}
                   />
                 </div>
-                <h2 className="text-md sm:text-lg font-semibold text-center">
+                <h2
+                  className={`text-lg sm:text-xl lg:text-xl text-center ${plusJakarta.className}`}
+                >
                   {item.name}
                 </h2>
-                <p className="text-lg sm:text-lg font-medium text-center">
+                <p
+                  className={`text-lg sm:text-xl lg:text-xl text-center ${geist.className}`}
+                >
                   {item.price}
                 </p>
               </div>
@@ -332,16 +392,23 @@ const Page = () => {
       {/* New Arrivals */}
       <Link href={"/new"}>
         <div className="bg-gray-100 p-4 sm:p-6 lg:p-8">
-          <h2 className="text-[20px] sm:text-2xl md:text-[24px] font-bold mb-4 ">
+          <h2
+            className={`text-[25px] md:text-[34px] lg:text-[35px] mb-3 ${plusJakarta.className}`}
+          >
             CHECK OUT NEW PRODUCTS
           </h2>
-          <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+
+          {/* Scrollable on Small & Medium, Grid on Large+ */}
+          <div className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-3 sm:gap-6 md:gap-4 lg:grid lg:grid-cols-4 lg:overflow-visible pb-4">
             {arrivalsData.map((item, index) => (
               <div
                 key={item.id || index}
-                className="bg-white group rounded-lg border p-2 space-y-3 hover:shadow-lg transition-shadow duration-300"
+                className="min-w-[200px] sm:min-w-[250px] md:min-w-[270px] lg:min-w-0 bg-white group rounded-lg border p-2 lg:p-3 xl:p-3 space-y-1 hover:shadow-lg transition-shadow duration-500"
               >
-                <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+                <div className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden">
+                  {/* Overlay */}
+                  <div className="absolute inset-0 group-hover:bg-black/30 transition duration-300 z-10" />
+
                   <Image
                     src={item.image}
                     alt={item.name}
@@ -350,15 +417,21 @@ const Page = () => {
                     height={500}
                   />
                 </div>
-                <h2 className="text-md sm:text-lg font-bold text-center">
+                <h2
+                  className={`text-lg sm:text-xl text-center ${plusJakarta.className}`}
+                >
                   {item.name}
                 </h2>
-                <p className="text-lg sm:text-lg font-medium text-center">
+                <p
+                  className={`text-lg lg:text-xl text-center ${geist.className}`}
+                >
                   {item.price}
                 </p>
               </div>
             ))}
           </div>
+
+          {/* See More Link */}
           <div className="flex justify-end mt-6">
             <Link
               href="/new"

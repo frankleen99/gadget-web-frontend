@@ -1,11 +1,17 @@
 "use client";
 import Link from "next/link";
 import { FaFacebookF, FaTwitter, FaInstagram} from "react-icons/fa";
+import { Geist } from "next/font/google";
+
+const geist = Geist({
+    subsets: ["latin"],
+    weight: "300"
+})
 
 export default function Footer() {
   return (
-    <footer className="bg-[#232323] text-gray-300">
-      <div className="max-w-6xl mx-auto px-4 py-10 md:py-16">
+    <footer className={`bg-[#232323] text-gray-300 ${geist.className}`}>
+      <div className="max-w-6xl mx-auto px-4 py-2 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-center">
           <div className="mb-4 md:mb-0">
             <h2 className="text-xl font-bold mb-4">GadgetWeb</h2>
